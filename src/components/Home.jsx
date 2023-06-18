@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 // import chart from "../assets/chart.png";
 import { SearchResult } from "./SearchResult";
+import UserNotFound from "./UserNotFound";
 const Search = () => {
   const [username, setUsername] = useState("");
+  // const [name, setName] = useState("");
 
   const fetchData = (username) => {
     fetch(`https://api.github.com/users/${username}`).then((response) =>
@@ -10,9 +12,12 @@ const Search = () => {
     );
   };
   const handleChange = (e) => {
-    console.log(e.target.value);
     setUsername(e.target.value);
-    fetchData(e.target.value);
+    // fetchData(username);
+  };
+
+  const setData = (username) => {
+    fetchData(username);
   };
   return (
     <div className="flex flex-col md:w-3/4 w-[98%]">
@@ -31,12 +36,19 @@ const Search = () => {
           className=" bg-[#FFFFFF]   outline-none focus:border-red-400 rounded-md w-11/12 mx-auto  font-sans   "
           onChange={handleChange}
         />
-        <button className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500">
+        <button
+          onClick={setData}
+          className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500"
+        >
           Search
         </button>
       </div>
 
-      {username ? <SearchResult username={username} /> : ""}
+      {username ? (
+        <SearchResult username={username} />
+      ) : (
+        <UserNotFound username={username} />
+      )}
 
       <div className="absolute md:top-20 top-20 md:right-5 right-1 ">
         {/* <img src={chart} alt="chart-img" className="md:w-[200px] w-2/5 " /> */}
