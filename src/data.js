@@ -1,0 +1,37 @@
+ const data ={
+    "login": "patilankita79",
+    "id": 22652292,
+    "node_id": "MDQ6VXNlcjIyNjUyMjky",
+    "avatar_url": "https://avatars.githubusercontent.com/u/22652292?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/patilankita79",
+    "html_url": "https://github.com/patilankita79",
+    "followers_url": "https://api.github.com/users/patilankita79/followers",
+    "following_url": "https://api.github.com/users/patilankita79/following{/other_user}",
+    "gists_url": "https://api.github.com/users/patilankita79/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/patilankita79/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/patilankita79/subscriptions",
+    "organizations_url": "https://api.github.com/users/patilankita79/orgs",
+    "repos_url": "https://api.github.com/users/patilankita79/repos",
+    "events_url": "https://api.github.com/users/patilankita79/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/patilankita79/received_events",
+    "type": "User",
+    "site_admin": false,
+    "name": "Ankita Patil",
+    "company": "Amazon",
+    "blog": "https://www.linkedin.com/in/ankita-patil79/",
+    "location": 'India',
+    "email": null,
+    "hireable": true,
+    "bio": "Master's from the University of Texas at Dallas ",
+    "twitter_username": null,
+    "public_repos": 91,
+    "public_gists": 0,
+    "followers": 102,
+    "following": 97,
+    "created_at": "2016-10-06T04:39:44Z",
+    "updated_at": "2022-08-09T05:01:31Z"
+    }
+    
+export default data;
+    
