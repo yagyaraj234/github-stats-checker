@@ -1,69 +1,48 @@
-import React, { useState, useEffect } from "react";
-import chart from "../assets/chart.png";
-import axios from "axios";
-const Home = () => {
-  const [data, setData] = useState([]);
-  const [inputUsername, setInputUsername] = useState("");
+import React, { useState } from "react";
+// import chart from "../assets/chart.png";
+import { SearchResult } from "./SearchResult";
+const Search = () => {
   const [username, setUsername] = useState("");
 
-  const handleChange = () => {
-    setUsername(inputUsername);
+  const fetchData = (username) => {
+    fetch(`https://api.github.com/users/${username}`).then((response) =>
+      setUsername(response.data)
+    );
   };
-  console.log(data);
-  useEffect(() => {
-    axios
-      .get(`https://api.github.com/users/${username}`)
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [username]);
+  const handleChange = (e) => {
+    console.log(e.target.value);
+    setUsername(e.target.value);
+    fetchData(e.target.value);
+  };
   return (
-    <div className="flex flex-col justify-center  ">
-      <h1 className="md:text-5xl text-4xl opacity-50">Github Profile Finder</h1>
+    <div className="flex flex-col md:w-3/4 w-[98%]">
+      <h1 className="md:text-5xl text-3xl opacity-50  my-10">
+        Github Profile Finder
+      </h1>
+      <div className=" border  border-gray-300 bg-white rounded-lg w-full flex flex-row justify-between">
+        <div className="text-blue-700 font-semibold text-3xl  mx-auto pt-2  ">
+          <ion-icon name="search-outline" size="medium"></ion-icon>
+        </div>
 
-      <input
-        type="text"
-        name="input-field"
-        id="input-field"
-        placeholder="Enter username"
-        className=" bg-[#FFFFFF] p-2  outline-none focus:border-red-400 rounded-lg m-5 w-3/4 mx-auto border border-gray-300 font-sans"
-        onChange={(e) => setInputUsername(e.target.value)}
-      />
-
-      <button
-        className="bg-[#413E4E] hover:bg-[#9381FF] text-[#FFFFFF] p-2 rounded-lg  mx-auto w-3/4 font-bold  "
-        onClick={handleChange}
-      >
-        Search
-      </button>
-
-      <div className="absolute md:top-20 top-5 md:right-5 right-1 ">
-        <img src={chart} alt="chart-img" className="md:w-[300px] w-1/4" />
+        <input
+          type="text"
+          value={username}
+          placeholder="Type username to search"
+          className=" bg-[#FFFFFF]   outline-none focus:border-red-400 rounded-md w-11/12 mx-auto  font-sans   "
+          onChange={handleChange}
+        />
+        <button className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500">
+          Search
+        </button>
       </div>
 
-      {/* cryptoData
-          .filter((coin) => {
-            return filterCoin.toLowerCase() === ""
-              ? coin
-              : coin.name.toLowerCase().includes(filterCoin);
-          }) */}
+      {username ? <SearchResult username={username} /> : ""}
 
-      {/* filter((data) => {
-          return inputUsername.toLowerCase() === ""
-            ? data
-            : data.login.toLowerCase().includes(inputUsername);
-        }) */}
-
-      {/* {data.map((user) => (
-        <div key={user.id}>
-          <p>{user.created_at}</p>
-        </div>
-      ))} */}
-
-      <p>{data.url}</p>
+      <div className="absolute md:top-20 top-20 md:right-5 right-1 ">
+        {/* <img src={chart} alt="chart-img" className="md:w-[200px] w-2/5 " /> */}
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default Search;
