@@ -1,19 +1,34 @@
-// import data from "../data";
-import { useState } from "react";
-import image from "../assets/image.png";
+import { useEffect, useState } from "react";
+import RepoList from "./RepoList";
+import axios from "axios";
+
 export const SearchResult = ({ data }) => {
-  const [imageUrl, setImageUrl] = useState(null);
+  const [repoData, setRepoData] = useState([]);
+
+  useEffect(() => {
+    fetchRepo();
+  }, [data]);
+  const fetchRepo = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${data}/repos?sort=created`
+      );
+      const repos = response.data;
+
+      if (repos.length > 0) {
+        const latestRepo = repos[0];
+        setRepoData(latestRepo);
+      }
+    } catch (error) {
+      console.error("Error fetching repository:", error);
+    }
+  };
   return (
-    <div className="mx-auto px-1 my-10 bg-white rounded-md  border-2">
-      <div className="flex flex-row gap-2  py-2 md:px-3">
+    <div className="mx-auto flex flex-col items-center  my-10 bg-white rounded-md  border-2">
+      {/* First Section Start  */}
+      <div className="flex flex-row justify-center gap-2  py-2 md:px-3">
         <div className="text-center md:w-3/12  w-1/3">
-        <img src={data.avatar_url} alt="text" className=" rounded-md" />
-        
-          {/* {data.avatar_url === "Null" ? (
-            <img src={image} alt="text" className=" rounded-md pt-5" />
-          ) : (
-            <img src={data.avatar_url} alt="text" className=" rounded-md" />
-          )} */}
+          <img src={data.avatar_url} alt="text" className=" rounded-md" />
           <p className="font-bold text-lg ">{data.name}</p>
         </div>
         <div className="flex flex-col items-center  ">
@@ -32,18 +47,30 @@ export const SearchResult = ({ data }) => {
             </p>
           </div>
           <div className="w-full md:my-1 my-2 border rounded border-gray-300">
-            <h3 className="font-bold border-b  md:p-2 p-1 pl-0 ">
-              Company : <span className="font-normal"> {data.company}</span>{" "}
+            <h3 className=" flex font-bold border-b  md:p-2 p-1 pl-0 ">
+              Company :{" "}
+              <span className="  font-normal">
+                {" "}
+                {data.company === null && (
+                  <p className="text-sm font-semibold px-2">NULL</p>
+                )}
+              </span>
             </h3>
-            <h3 className="font-bold border-b md:p-2 p-1 pl-0 ">
-              Website : <span className="font-normal"> {data.website}</span>{" "}
+            <h3 className="font-bold flex border-b md:p-2 p-1 pl-0 ">
+              Website :{" "}
+              <span className="font-normal">
+                {" "}
+                {data.website === null && (
+                  <p className="text-sm font-semibold px-2">NULL</p>
+                )}
+              </span>
             </h3>
-            <h3 className="font-bold border-b md:p-2 p-1 pl-0 ">
-              Location : <span className="font-normal"> {data.location}</span>{" "}
+            <h3 className="font-bold flex border-b md:p-2 p-1 pl-0 ">
+              Location : <span className="font-normal"> {data.location}</span>
             </h3>
             <h3 className="font-bold md:p-2 p-1 pl-0 hid">
               Member Since :{" "}
-              <span className="font-normal"> {Date(data.created_at)}</span>{" "}
+              <span className="font-normal"> {Date(data.created_at)}</span>
             </h3>
           </div>
         </div>
@@ -51,13 +78,19 @@ export const SearchResult = ({ data }) => {
 
       {/* First Section End  */}
 
-      <div className="">
-        <button className="bg-blue-600 text-white md:p-2 p-1 rounded-md mx-auto">
+      {/* repo section start  */}
+      <RepoList repoData={repoData} />
+      {/* repo section end */}
+
+      {/* bottom Section  Start  */}
+      <div className="ml-5">
+        <button className="bg-blue-600 text-white md:p-2 p-1 rounded-md ">
           <a href={data.html_url} target="_blank" rel="noreferrer">
             View Full Profile
           </a>
         </button>
       </div>
+      {/* bottom section end  */}
     </div>
   );
 };
