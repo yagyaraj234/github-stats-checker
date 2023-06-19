@@ -7,11 +7,12 @@ export const SearchResult = ({ data }) => {
     <div className="mx-auto px-1 my-10 bg-white rounded-md  border-2">
       <div className="flex flex-row gap-2  py-2 md:px-3">
         <div className="text-center md:w-3/12  w-1/3">
-          { imageUrl && data ? (
-            <img src={data.avatar_url} alt="text" className=" rounded-md" />
+        <img src={image} alt="text" className=" rounded-md pt-5" />
+          {/* {data.avatar_url === "Null" ? (
+            <img src={image} alt="text" className=" rounded-md pt-5" />
           ) : (
-            <img src={image} alt="text" className=" rounded-md" />
-          )}
+            <img src={data.avatar_url} alt="text" className=" rounded-md" />
+          )} */}
           <p className="font-bold text-lg ">{data.name}</p>
         </div>
         <div className="flex flex-col items-center  ">

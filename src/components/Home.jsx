@@ -46,7 +46,7 @@ const Search = () => {
        
       </div>
 
-      {data ? <SearchResult data={data} /> : <UserNotFound data={data} />}
+      {data ? <SearchResult data={data} /> : <UserNotFound username={username} />}
       
 
       <div className="absolute md:top-20 top-20 md:right-5 right-1 ">
