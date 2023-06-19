@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import chart from "../assets/chart.png";
+import axios from "axios";
 import { SearchResult } from "./SearchResult";
 import UserNotFound from "./UserNotFound";
 const Search = () => {
   const [username, setUsername] = useState("");
-  // const [name, setName] = useState("");
+  const [data, setData] = useState([]);
 
-  const fetchData = (username) => {
-    fetch(`https://api.github.com/users/${username}`).then((response) =>
-      setUsername(response.data)
-    );
+  useEffect(() => {
+    fetchData();
+  }, [username]);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${username}`
+      );
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   const handleChange = (e) => {
     setUsername(e.target.value);
-    // fetchData(username);
   };
 
-  const setData = (username) => {
-    fetchData(username);
-  };
   return (
     <div className="flex flex-col md:w-3/4 w-[98%]">
       <h1 className="md:text-5xl text-3xl opacity-50  my-10">
@@ -36,22 +43,15 @@ const Search = () => {
           className=" bg-[#FFFFFF]   outline-none focus:border-red-400 rounded-md w-11/12 mx-auto  font-sans   "
           onChange={handleChange}
         />
-        <button
-          onClick={setData}
-          className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500"
-        >
+        <button className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500">
           Search
         </button>
       </div>
 
-      {username ? (
-        <SearchResult username={username} />
-      ) : (
-        <UserNotFound username={username} />
-      )}
+      {data ? <SearchResult data={data} /> : <UserNotFound data={data} />}
+      
 
       <div className="absolute md:top-20 top-20 md:right-5 right-1 ">
-        {/* <img src={chart} alt="chart-img" className="md:w-[200px] w-2/5 " /> */}
       </div>
     </div>
   );
