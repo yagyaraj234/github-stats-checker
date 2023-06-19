@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 // import chart from "../assets/chart.png";
 import axios from "axios";
 import { SearchResult } from "./SearchResult";
-import UserNotFound from "./UserNotFound";
 const Search = () => {
   const [username, setUsername] = useState("");
   const [data, setData] = useState([]);
@@ -46,8 +45,7 @@ const Search = () => {
        
       </div>
 
-      {/* {data ? <SearchResult data={data} /> : <UserNotFound username={username} />} */}
-      {username.length>'0' &&<SearchResult data={data} />}
+      {username.length>'0' &&<SearchResult data={data} username={username} />}
       
 
       <div className="absolute md:top-20 top-20 md:right-5 right-1 ">
