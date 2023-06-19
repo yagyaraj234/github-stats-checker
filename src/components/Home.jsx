@@ -43,9 +43,7 @@ const Search = () => {
           className=" bg-[#FFFFFF]   outline-none focus:border-red-400 rounded-md w-11/12 mx-auto  font-sans   "
           onChange={handleChange}
         />
-        <button className="px-1 md:px-2 bg-blue-100 hover:bg-blue-200 rounded-r-md transition-colors duration-500">
-          Search
-        </button>
+       
       </div>
 
       {data ? <SearchResult data={data} /> : <UserNotFound data={data} />}
